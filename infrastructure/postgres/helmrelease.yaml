@@ -1,0 +1,25 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: postgres
+  namespace: default
+spec:
+  releaseName: postgres
+  chart:
+    spec:
+      chart: postgresql
+      version: 14.11_1   # Update if needed
+      sourceRef:
+        kind: HelmRepository
+        name: bitnami
+        namespace: flux-system
+  interval: 5m
+  values:
+    auth:
+      username: test
+      password: test
+      database: arafat_database
+    primary:
+      persistence:
+        enabled: true
+        size: 1Gi
